@@ -1,4 +1,3 @@
-# E-Agle TRT
 # Serializers
 
 Serializers is a generation code library for C++ to be used with Google's _Protocol Buffers_.

@@ -26,7 +26,7 @@ jobs:
         run:  go env
 
       - name: Install Python requirements
-        run:  'pip install -r serializers/requirements.txt'
+        run:  'pip install -r serializers-generator/requirements.txt'
       - name: Install 'protoc'
         run: |
           DEBIAN_FRONTEND=noninteractive
@@ -37,9 +37,9 @@ jobs:
           go install github.com/chrusty/protoc-gen-jsonschema/cmd/protoc-gen-jsonschema@latest
 
       - name: Run C++ files generation
-        working-directory: ./serializers
+        working-directory: ./serializers-generator
         run: python3 src/generator/main.py ../telemetry /tmp/generated
       - name: Run JSON Schema files generation
-        working-directory: ./serializers
+        working-directory: ./serializers-generator
         run: |
           ./scripts/generate_schemas /tmp/generated/proto /tmp/generated
