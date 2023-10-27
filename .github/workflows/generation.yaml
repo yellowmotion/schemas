@@ -2,10 +2,9 @@ name: Generation and publishing with 'serializers-generator'
 
 on:
   workflow_dispatch:
-  pull_request:
-    types: ["opened", "edited", "reopened", "synchronize"]
-    branches: [main]
-
+  push:
+    branches:
+      - main
 jobs:
   generation:
     runs-on: ubuntu-latest
