@@ -1,4 +1,4 @@
-name: Dry generation with 'serializers-generator'
+name: Dry generation with Serializers
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
   dry_generation:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone 'message-definitions'
+      - name: Clone 'telemetry-serializers'
         uses: actions/checkout@v4
         with:
           repository: '${{ github.repository }}'
@@ -26,7 +26,7 @@ jobs:
         run:  go env
 
       - name: Install Python requirements
-        run:  'pip install -r serializers-generator/requirements.txt'
+        run:  'pip install -r lib/serializers/requirements.txt'
       - name: Install 'protoc'
         run: |
           DEBIAN_FRONTEND=noninteractive
@@ -37,9 +37,9 @@ jobs:
           go install github.com/chrusty/protoc-gen-jsonschema/cmd/protoc-gen-jsonschema@latest
 
       - name: Run C++ files generation
-        working-directory: ./serializers-generator
-        run: python3 src/generator/main.py ../telemetry /tmp/generated
+        working-directory: ./lib/serializers
+        run: python3 src/generator/main.py ../proto /tmp/generated
       - name: Run JSON Schema files generation
-        working-directory: ./serializers-generator
+        working-directory: ./lib/serializers
         run: |
           ./scripts/generate_schemas /tmp/generated/proto /tmp/generated

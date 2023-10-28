@@ -1,3 +1,3 @@
-[submodule "serializers-generator"]
-	path = serializers-generator
-	url = git@github.com:eagletrt/serializers-generator.git
+[submodule "lib/serializers"]
+	path = lib/serializers
+	url = git@github.com:eagletrt/serializers.git
