@@ -9,11 +9,16 @@ jobs:
   generation:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone 'telemetry-serializers'
+      - name: Clone telemetry-serializers
         uses: actions/checkout@v4
         with:
           repository: '${{ github.repository }}'
-          submodules: true
+
+      - name: Clone serializers
+        uses: actions/checkout@v4
+        with:
+          repository: 'eagletrt/serializers'
+          path: serializers
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v4
@@ -21,14 +26,14 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
+      - name: Install Python requirements
+        run:  'pip install -r serializers/requirements.txt'
+
       - name: Set up Go
         uses: actions/setup-go@v4
 
       - name: Print go envs
         run:  go env
-
-      - name: Install Python requirements
-        run:  'pip install -r lib/serializers/requirements.txt'
 
       - name: Install 'protoc'
         run: |
@@ -41,8 +46,9 @@ jobs:
       #     go install github.com/chrusty/protoc-gen-jsonschema/cmd/protoc-gen-jsonschema@latest
 
       - name: Run Serializers files generation
-        working-directory: ./lib/serializers
-        run: python3 src/generator/main.py ../../proto /tmp/generated
+        working-directory: serializers
+        run: |
+          python3 src/generator/main.py ../proto /tmp/generated
 
       # - name: Run JSON Schema files generation
       #   working-directory: ./lib/serializers
@@ -64,4 +70,3 @@ jobs:
           git add .
           if [[ $(git status --porcelain) ]]; then git commit -am "chore: automatically generated files" && git push; fi
           echo "::set-output name=HASH::$(git rev-parse HEAD)"
-
