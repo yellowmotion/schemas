@@ -51,9 +51,8 @@ jobs:
           python3 src/generator/main.py ../proto /tmp/generated
 
       - name: Run JSON Schema files generation
-        working-directory: ./lib/serializers
         run: |
-          ./scripts/generate_schemas /tmp/generated/proto /tmp/generated
+          ./serializers/scripts/generate_schemas /tmp/generated/proto /tmp/generated
 
       - name: Change branch to 'build'
         uses: actions/checkout@v4
