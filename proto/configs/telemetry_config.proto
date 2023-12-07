@@ -41,9 +41,6 @@ message ConnectionSettings
 
 message TelemetryConfig
 {
-    string vehicleId = 1;
-    string deviceId = 2;
-    uint64 role = 3;
     bool cameraEnabled = 4;
     bool generateCsv = 5;
     Connection connection = 6;
