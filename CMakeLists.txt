@@ -10,9 +10,9 @@ add_library(
     ${PROJECT_NAME}
     STATIC
 
-    src/configs/telemetry_config.cpp
-    src/configs/session_config.cpp
     src/configs/car_config.cpp
+    src/configs/session_config.cpp
+    src/configs/telemetry_config.cpp
 )
 
 target_include_directories(
